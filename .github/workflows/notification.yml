@@ -11,8 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-      - uses: actions/checkout@v4
-
+        uses: actions/checkout@v4
       - name: Notify on Push
         if: github.event_name == 'push'
         run: |
