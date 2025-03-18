@@ -2,8 +2,11 @@
 /* 페이지 규격 , 폰트 */
 .page {
   position: relative;
-  width: 2560px;
-  height: 1440px;
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-image: url("배경 이미지 url");
+  background-size: auto 100%;
+  background-position: center;
   overflow: hidden;
   text-align: left;
   color: rgba(0, 0, 0, 0);
