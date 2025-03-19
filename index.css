@@ -1,15 +1,19 @@
 /* 페이지 규격 , 폰트 */
 div.container {
-  width: 2670px;
+  width: 2640px;
   margin: auto;
-  position: relative;
   font-family: "Gmarket Sans TTF";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);  
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 /* 배경 화면 */
 img.page {
   width: 100%;
-  margin-top: 30px;
+  height: auto;
 }
 
 /* 대기 화면 */
