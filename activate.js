@@ -3,7 +3,7 @@ fetch("./activate.json")
   .then((data) => {
     const selectedData = getSelectedData(data);
     displaySelectedData(selectedData);
-    // 이후 동일한 처리 과정
+    saveToLocalStorage(selectedData); // 미리 로컬 스토리지에 저장
   })
   .catch((error) =>
     console.error("데이터를 불러오는 중 오류가 발생했습니다:", error)
@@ -22,8 +22,7 @@ function getTwoRandomNumbers(min, max) {
 
 // 랜덤으로 선택된 번호에 해당하는 데이터 가져오기
 function getSelectedData(data) {
-  const selectedNumbers = getTwoRandomNumbers(1, 5); // 예: [2, 4]
-  console.log("랜덤 선택된 번호:", selectedNumbers);
+  const selectedNumbers = getTwoRandomNumbers(1, 5);
 
   // data가 배열인지 확인하고 필터링
   if (Array.isArray(data)) {
@@ -48,7 +47,6 @@ function displaySelectedData(selectedData) {
       selectedData[0].외국어
     } 건강 : +${selectedData[0].건강}</p>
       `;
-    console.log(firstDiv);
   }
   const secondDiv = document.getElementById("option2");
   if (secondDiv && selectedData[1]) {
@@ -63,5 +61,24 @@ function displaySelectedData(selectedData) {
       `;
   }
 }
+// 선택된 데이터를 미리 로컬 스토리지에 저장
+function saveToLocalStorage(selectedData) {
+  if (selectedData.length >= 2) {
+    localStorage.setItem("option1", JSON.stringify(selectedData[0]));
+    localStorage.setItem("option2", JSON.stringify(selectedData[1]));
+  } else {
+    console.error("저장할 데이터가 부족합니다!");
+  }
+}
+// 다음 페이지로 이동
+document.querySelector(".left_c").addEventListener("click", () => goToNextPage_l());
+document.querySelector(".right_c").addEventListener("click", () => goToNextPage_r());
 
-// DOM이 로드된 후 실행
+function goToNextPage_l() {
+  localStorage.removeItem('option2');
+  window.location.href = "./activate_3.html"; // 다음 페이지로 이동
+}
+function goToNextPage_r() {
+  localStorage.removeItem('option1');
+  window.location.href = "./activate_3.html"; // 다음 페이지로 이동
+}
