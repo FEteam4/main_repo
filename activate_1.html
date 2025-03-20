@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="stylesheet" href="index.css" />
+    <script src="textTyper.js"></script>
     <style>
       /* 페이지 규격 , 폰트 */
       .page {
@@ -72,8 +73,8 @@ bottom: 10px;
       <div class="button_container">
       <div class="small_chat_window"></div>
       <div class="button_window">
-        <button onclick="showAllText()" id="showAllText">모두 표시</button>
-        <button onclick="showNextChar()" id="nextText">다음 글자</button>
+        <button id="showAllText">모두 표시</button>
+        <button id="nextText">다음 글자</button>
       </div>
       </div>
       <div class="character" id="character">
@@ -86,7 +87,6 @@ bottom: 10px;
     </div>
 
     <script>
-
       const character = document.getElementById("character");
       let isActive = false;
 
@@ -111,9 +111,12 @@ bottom: 10px;
         document.addEventListener("DOMContentLoaded", () => {
             textTyper.showText();
         });
-
         // 버튼 클릭 시 다음 텍스트 출력
-        document.getElementById("nextBtn").addEventListener("click", () => {
+        document.getElementById("showAllText").addEventListener("click", () => {
+            textTyper.showAllText();
+        });
+        // 버튼 클릭 시 다음 텍스트 출력
+        document.getElementById("nextText").addEventListener("click", () => {
             textTyper.showNextChar();
         });
 
