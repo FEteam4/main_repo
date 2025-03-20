@@ -57,13 +57,16 @@ img.page {
   filter: blur(29.35px);
 }
 /* 큰 대화창 위에 상호작용 키 배경 */
-.small_chat_window{
+.button_container{
   position: absolute;
   width: 392px;
   height: 57px;
   bottom: 350px;
   left:65%;
   align-items: end;
+}
+.small_chat_window{
+  height: 57px;
   background: rgba(0, 0, 0, 0.79);
   filter: blur(29px);
 }

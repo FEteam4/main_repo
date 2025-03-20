@@ -11,7 +11,7 @@
         position: relative;
         height: 100vh;
         background-repeat: no-repeat;
-        background-image: url("/main_repo/image/background/활동_동아리화면.png");
+        background-image: url("./image/background/활동_동아리화면.png");
         background-size: auto 100%;
         background-position: center;
         overflow: hidden;
@@ -51,14 +51,33 @@
         height: 100%;
         object-fit: contain;
       }
+      .showAllText{
+        position: absolute;
+        width: 50%;
+        height: 100%;
+        z-index: 100;
+      }
+      .button_window{
+        width: 100%;
+        display: flex;
+        justify-content: space-evenly;
+        position: absolute;
+bottom: 10px;
+      }
     </style>
   </head>
 
   <body>
     <div class="page container">
+      <div class="button_container">
       <div class="small_chat_window"></div>
+      <div class="button_window">
+        <button onclick="showAllText()" id="showAllText">모두 표시</button>
+        <button onclick="showNextChar()" id="nextText">다음 글자</button>
+      </div>
+      </div>
       <div class="character" id="character">
-        <img src="./image/another/동아리_사람.png" alt="" />
+        <img src="./image/another/동아리_사람.png"/>
       </div>
       <div class="text_container">
         <div class="chat_window"></div>
@@ -67,10 +86,6 @@
     </div>
 
     <script>
-      // 이미지 요소
-      document.addEventListener("click", () => {
-        window.location.href = "./activate_2.html";
-      });
 
       const character = document.getElementById("character");
       let isActive = false;
@@ -83,20 +98,49 @@
         }, 500);
       });
 
-      const text = "안녕하세요! 시뮬레이션 게임에 오신걸 환영합니다.";
-      let index = 0;
-      const speed = 150; // 글자 나오는 속도 (ms)
-
-      function showText() {
-        if (index < text.length) {
-          document.getElementById("text").innerHTML += text[index];
-          index++;
-          setTimeout(showText, speed);
-        }
+      const texts = [
+      "안녕하세요! 시뮬레이션 게임에 오신걸 환영합니다.",
+      "빠른 웹페이지의 반응 속도를 높이는 방법을 알아봅시다.",
+      "효율적인 데이터 로딩 방식에 대해 공부해 보아요!"
+    ];
+    let text = texts[0]; // 현재 표시할 텍스트
+    let index = 0;
+    const speed = 150; // 글자 나오는 속도 (ms)
+    let isTyping = false;
+    function showText() {
+      if (index < text.length) {
+        document.getElementById("text").innerHTML += text[index];
+        index++;
+        setTimeout(showText, speed);
+      } else {
+        isTyping = false;
       }
-      document.addEventListener("DOMContentLoaded", () => {
-        setTimeout(showText, 2000);
-      });
+    }
+
+    function showAllText() {
+      document.getElementById("text").innerHTML = text;
+      index = text.length;
+      isTyping = false;
+    }
+
+    function showNextChar() {
+      if (index < text.length) {
+        document.getElementById("text").innerHTML += text[index];
+        index++;
+      }
+    }
+
+    function changeText() {
+      text = texts[Math.floor(Math.random() * texts.length)]; // 랜덤으로 새로운 텍스트 선택
+      index = 0;
+      document.getElementById("text").innerHTML = "";
+      isTyping = true;
+      showText();
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      setTimeout(showText, 2000);
+    });
     </script>
   </body>
 </html>
