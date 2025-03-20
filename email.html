@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mail Check</title>
+
+    <style>
+      @font-face {
+        font-family: "GmarketSansMedium";
+        src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff")
+          format("woff");
+        font-weight: normal;
+        font-style: normal;
+      }
+
+      body {
+        font-family: "GmarketSansMedium";
+        margin: 0;
+        line-height: normal;
+        background-color: black;
+      }
+
+      .page {
+        position: relative;
+        height: 100vh;
+        background-repeat: no-repeat;
+        background-image: url("./image/background/대기화면.png"); /* 배경 이미지 */
+        background-size: auto 100%;
+        background-position: center;
+        overflow: hidden;
+        text-align: left;
+        color: white;
+      }
+
+      /* 캐릭터 이미지 */
+      .person-image {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        height: 80%;
+        transform: translateX(-50%);
+        z-index: 5; /* 캐릭터가 배경보다 위 */
+      }
+
+      /* 느낌표 컨테이너 */
+      .container_mail {
+        position: absolute;
+        top: 10%;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+      }
+
+      /* 느낌표 아이콘 & 애니메이션 */
+      .exclamation_icon {
+        position: relative;
+        animation: bounce 1s infinite; /* keyframe 애니메이션 */
+        cursor: pointer;
+      }
+      .exclamation_mark1 {
+        width: 27px;
+        height: 60px;
+        border-radius: 10px 10px 30px 30px;
+        background: #f00;
+        box-shadow: 0px 4px 10.9px 5px rgba(0, 0, 0, 0.69);
+      }
+      .exclamation_mark2 {
+        width: 24px;
+        height: 25px;
+        border-radius: 25px;
+        background: #f00;
+        box-shadow: 0px 4px 10.9px 5px rgba(0, 0, 0, 0.69);
+        position: absolute;
+        top: 65px;
+        left: 1.5px;
+      }
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      /* 채팅창 배경 */
+      .chat_window {
+        position: relative;
+        height: 250px;
+        background: rgba(0, 0, 0, 0.79);
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        border-radius: 40px;
+        filter: blur(29.35px);
+        z-index: 20;
+      }
+
+      /* 텍스트 컨테이너 */
+      .text_container {
+        position: absolute;
+        width: 84%;
+        left: 6%;
+        bottom: 100px;
+      }
+
+      /* 실제 타이핑되는 텍스트 */
+      .text_context {
+        position: absolute;
+        font-size: 2.5rem;
+        z-index: 100;
+        color: white;
+        top: 50px;
+        left: 50px;
+      }
+
+      /* 오른쪽 하단 삼각형 버튼 (다음 화면 이동) */
+      .next-button {
+        position: absolute;
+        right: 70px;
+        bottom: 50px;
+        width: 0;
+        height: 0;
+        border-top: 30px solid transparent;
+        border-bottom: 30px solid transparent;
+        border-left: 50px solid #fff;
+        cursor: pointer;
+        z-index: 40;
+      }
+      .next-button:hover {
+        opacity: 0.8;
+      }
+
+      /* (필요 시) 상태 바 관련
+      .status_background {
+        width: 289px;
+        height: 246px;
+        opacity: 0.51;
+        background: #5fcdfc;
+        box-shadow: 100px 100px 100px;
+        border-radius: 50px;
+        filter: blur(50px);
+      }
+      .status_big_bar {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        border-radius: 50px;
+        background-color: #fff;
+        border: 1px solid #5fcdfc;
+        width: 232px;
+        height: 29.3px;
+      }
+      .status_name_bar {
+        position: absolute;
+        top: 2.8px;
+        left: 3.49px;
+        border-radius: 50px;
+        background-color: rgba(95, 205, 252, 0.37);
+        width: 51px;
+        height: 23.8px;
+      }
+      */
+    </style>
+  </head>
+
+  <body>
+    <div class="page">
+      <!-- 채팅창 및 타이핑 텍스트 영역 -->
+      <div class="text_container">
+        <div class="chat_window"></div>
+        <div class="text_context" id="text"></div>
+      </div>
+
+      <!-- 캐릭터 이미지 -->
+      <img
+        src="./image/man/남자_서류_이메일확인표정.png"
+        alt="이메일 확인 캐릭터"
+        class="person-image"
+      />
+
+      <!-- 느낌표 + 메일 아이콘 -->
+      <div class="container_mail">
+        <div class="exclamation_icon">
+          <div class="exclamation_mark1"></div>
+          <div class="exclamation_mark2"></div>
+        </div>
+      </div>
+
+      <!-- 다음 화면으로 이동하는 삼각형 버튼 -->
+      <div class="next-button" onclick="goToNextPage()"></div>
+    </div>
+
+    <script>
+      // 1) 전형 단계(step) 세팅
+      // 만약 step이 없다면 '서류'로 초기화 (자동 갱신은 여기서 하지 않음)
+      let step = localStorage.getItem("step");
+      if (!step) {
+        step = "서류";
+        localStorage.setItem("step", step);
+      }
+
+      // 2) 타이핑할 문구 생성
+      const textToType = `${step} 전형 결과가 도착했습니다. 확인하시겠습니까?`;
+
+      // 3) 타이핑 효과 구현
+      let index = 0;
+      const speed = 80; // 글자 출력 간격 (ms)
+
+      function showText() {
+        if (index < textToType.length) {
+          document.getElementById("text").innerHTML += textToType[index];
+          index++;
+          setTimeout(showText, speed);
+        }
+      }
+      document.addEventListener("DOMContentLoaded", showText);
+
+      // 4) (선택) 로컬 스토리지 예시 데이터 세팅
+      //    (실제 프로젝트에 맞춰 수정 가능)
+      if (!localStorage.getItem("gameData")) {
+        const sampleData = {
+          name: "민수",
+          gender: "남성",
+          stats: {
+            개발능력: 70,
+            코테실력: 70,
+            CS지식: 70,
+            PT능력: 70,
+            외국어: 70,
+            건강: 70,
+          },
+        };
+        localStorage.setItem("gameData", JSON.stringify(sampleData));
+      }
+
+      // 5) 다음 화면으로 이동 (임시 함수)
+      function goToNextPage() {
+        // 여기서 합/불 판별 화면 혹은 다음 페이지로 이동하는 로직 작성
+        window.location.href = "result.html";
+      }
+    </script>
+  </body>
+</html>
