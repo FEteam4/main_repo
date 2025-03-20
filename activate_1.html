@@ -109,7 +109,7 @@ bottom: 10px;
 
         // 페이지 로드 후 텍스트 애니메이션 시작
         document.addEventListener("DOMContentLoaded", () => {
-            textTyper.showText();
+          setTimeout(() => textTyper.showText(), 1000);
         });
         // 버튼 클릭 시 다음 텍스트 출력
         document.getElementById("showAllText").addEventListener("click", () => {
