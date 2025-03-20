@@ -1,6 +1,6 @@
 /* 페이지 규격 , 폰트 */
 div.container {
-  width: 2640px;
+  width: 1600px;
   margin: auto;
   font-family: "Gmarket Sans TTF";
   position: absolute;
@@ -21,17 +21,18 @@ img.page {
   position: absolute;
   top: 0px;
   left: 0px;
-  width: 2560px;
-  height: 1440px;
+  margin-left: 100px;
+  margin-right: 100px;
+  width: 100%;
   object-fit: cover;
 }
 
 /* 큰 대화창 */
 div.chat_window {
   position: absolute;
-  width: 2200px;
-  height: 450px;
-  left: 8%;
+  height: 250px;
+  width: 84%;
+  left: 6%;
   bottom: 100px;
   background: rgba(0, 0, 0, 0.79);
   box-shadow: 58px 58px 58px;
