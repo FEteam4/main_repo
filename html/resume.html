@@ -7,20 +7,22 @@
     <link rel="stylesheet" href="../index.css" />
     <link rel="stylesheet" href="../global.css" />
     <style>
-      .text-container {
+      .text_container {
+        /* display: none; */
         position: absolute;
         width: 84%;
-        height: 250px;
+        height: 340px;
         left: 6%;
         bottom: 5px;
       }
-      .text-context {
+      .text_context {
         position: absolute;
         font-size: 2rem;
         z-index: 100;
         color: white;
-        left: 50px;
-        bottom: 200px;
+        left: 80px;
+        right: 80px;
+        bottom: 0px;
       }
       .chat_window {
         position: absolute;
@@ -32,40 +34,89 @@
         border-radius: 40px;
         filter: blur(29.35px);
       }
+      .character_container {
+        /* display: none; */
+        position: absolute;
+        bottom: 0;
+        left: 15%;
+      }
+      .character {
+        width: auto;
+        height: 650px;
+      }
+      @keyframes blink-effect {
+        50% {
+          opacity: 0;
+        }
+      }
+      .next_button {
+        display: none;
+        position: absolute;
+        right: 20px;
+        bottom: 80px;
+        border-left: 30px solid white;
+        border-top: 20px solid transparent;
+        border-bottom: 20px solid transparent;
+        cursor: pointer;
+        animation: blink-effect 1s step-end infinite;
+      }
+      .next_button:hover {
+        animation: none;
+      }
     </style>
   </head>
   <body>
     <div class="container">
-      <img src="../image/background/채용전형_코테화면.png" class="page" />
-      <div class="text-container">
+      <img src="../image/background/채용전형_서류화면.png" class="page" />
+      <div class="character_container">
+        <img src="../image/man/남자_서류_평소표정.png" class="character" />
+      </div>
+      <div class="text_container">
         <div class="chat_window"></div>
-        <div class="text-context"></div>
+        <div class="text_context"></div>
+        <div class="next_button"></div>
       </div>
     </div>
     <script>
-      const text = "ABC 회사에서 채용 공고가 떴습니다!";
-
       let index = 0;
       const speed = 100;
 
-      const show = (text, callback = null) => {
-        const context = document.querySelector(".text-context");
+      const show = async (text) => {
+        const context = document.querySelector(".text_context");
+        let index = 0;
+        context.innerHTML = "";
 
-        const type = () => {
-          if (index < text.length) {
-            context.innerHTML += text[index];
-            index++;
-            setTimeout(type, speed);
-          } else if (callback) {
-            context.innerHTML += "<br/>";
-            setTimeout(callback, speed * 2);
-          }
-        };
-
-        type();
+        for (const char of text) {
+          context.innerHTML += char;
+          await new Promise((resolve) => setTimeout(resolve, speed));
+        }
       };
 
-      document.addEventListener("DOMContentLoaded", () => show(text));
+      const next_button = document.querySelector(".next_button");
+
+      const messages = [
+        "서류 검토를 마쳤습니다. 지금 바로 서류를 제출하시겠습니까?",
+        "서류 전형 결과가 도착했습니다. 메일을 확인해 보시겠습니까?",
+        "다음 전형까지 2주 밖에 남지 않았습니다. 코테를 준비할 마지막 기회입니다.",
+      ];
+      let currentIndex = 0;
+
+      const controlButton = async () => {
+        if (currentIndex >= messages.length) return;
+
+        next_button.style.display = "none";
+        await show(messages[currentIndex]);
+        currentIndex++;
+
+        next_button.style.display = "block";
+        if (currentIndex == messages.length) {
+          next_button.removeEventListener("mousedown", controlButton);
+          console.log('대기화면으로 이동'); // todo : 대기화면으로 이동
+        }
+      };
+
+      next_button.addEventListener("mousedown", controlButton);
+      document.addEventListener("DOMContentLoaded", controlButton);
     </script>
   </body>
 </html>
