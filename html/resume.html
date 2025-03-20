@@ -7,12 +7,55 @@
     <link rel="stylesheet" href="../index.css" />
     <link rel="stylesheet" href="../global.css" />
     <style>
+      .text-container {
+        position: absolute;
+        width: 84%;
+        height: 250px;
+        left: 6%;
+        bottom: 5px;
+      }
+      .text-context {
+        position: absolute;
+        font-size: 2rem;
+        z-index: 100;
+        color: white;
+        left: 50px;
+        bottom: 200px;
+      }
     </style>
   </head>
   <body>
     <div class="container">
       <img src="../image/background/채용전형_코테화면.png" class="page" />
-      <div class="chat_window"></div>
+      <div class="text-container">
+        <div class="chat_window"></div>
+        <div class="text-context"></div>
+      </div>
     </div>
+    <script>
+      const text = "ABC 회사에서 채용 공고가 떴습니다!";
+
+      let index = 0;
+      const speed = 100;
+
+      const show = (text, callback = null) => {
+        const context = document.querySelector(".text-context");
+
+        const type = () => {
+          if (index < text.length) {
+            context.innerHTML += text[index];
+            index++;
+            setTimeout(type, speed);
+          } else if (callback) {
+            context.innerHTML += "<br/>";
+            setTimeout(callback, speed * 2);
+          }
+        };
+
+        type();
+      };
+
+      document.addEventListener("DOMContentLoaded", () => show(text));
+    </script>
   </body>
 </html>

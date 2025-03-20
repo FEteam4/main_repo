@@ -31,8 +31,7 @@ img.page {
 div.chat_window {
   position: absolute;
   height: 250px;
-  width: 84%;
-  left: 6%;
+  width: 100%;
   bottom: 100px;
   background: rgba(0, 0, 0, 0.79);
   box-shadow: 58px 58px 58px;
