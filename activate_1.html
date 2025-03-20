@@ -99,13 +99,14 @@ bottom: 10px;
       });
 
       const texts = [
-      "안녕하세요! 시뮬레이션 게임에 오신걸 환영합니다.",
-      "빠른 웹페이지의 반응 속도를 높이는 방법을 알아봅시다.",
-      "효율적인 데이터 로딩 방식에 대해 공부해 보아요!"
+      "전공 동아리? 개발 스터디? ‘그냥 가볍게’ 시작했는데 주말이 사라졌습니다.",
+      "협업, 리딩, 발표, 개발.. 남는 건 실력일까요, 피로일까요?",
+      "아무튼 이거.. 생각보다 빡셉니다. (진짜로.) 그래도 해야지 어떡해."
     ];
-    let text = texts[0]; // 현재 표시할 텍스트
+    let indexI = 0;
+    let text = texts[indexI]; // 현재 표시할 텍스트
     let index = 0;
-    const speed = 150; // 글자 나오는 속도 (ms)
+    const speed = 200; // 글자 나오는 속도 (ms)
     let isTyping = false;
     function showText() {
       if (index < text.length) {
@@ -124,19 +125,19 @@ bottom: 10px;
     }
 
     function showNextChar() {
-      if (index < text.length) {
-        document.getElementById("text").innerHTML += text[index];
-        index++;
-      }
-    }
+  if (indexI < texts.length - 1) {
+    indexI++; // 다음 텍스트로 변경
+    
+  text = texts[indexI]; // 새로운 텍스트 업데이트
+  index = 0; // 글자 출력 인덱스 초기화
+  document.getElementById("text").innerHTML = ""; // 기존 텍스트 지우기
+  showText(); // 새로운 텍스트 출력 시작
+  } else {
+    window.location.href = "./activate_2.html"; 
+  }
+  
+}
 
-    function changeText() {
-      text = texts[Math.floor(Math.random() * texts.length)]; // 랜덤으로 새로운 텍스트 선택
-      index = 0;
-      document.getElementById("text").innerHTML = "";
-      isTyping = true;
-      showText();
-    }
 
     document.addEventListener("DOMContentLoaded", () => {
       setTimeout(showText, 2000);
