@@ -74,9 +74,14 @@ function saveToLocalStorage(selectedData) {
   }
 }
 // 다음 페이지로 이동
-document.querySelector(".left_c").addEventListener("click", () => goToNextPage());
-document.querySelector(".right_c").addEventListener("click", () => goToNextPage());
+document.querySelector(".left_c").addEventListener("click", () => goToNextPage_l());
+document.querySelector(".right_c").addEventListener("click", () => goToNextPage_r());
 
-function goToNextPage() {
+function goToNextPage_l() {
+  localStorage.removeItem('option2');
+  window.location.href = "./activate_3.html"; // 다음 페이지로 이동
+}
+function goToNextPage_R() {
+  localStorage.removeItem('option1');
   window.location.href = "./activate_3.html"; // 다음 페이지로 이동
 }
