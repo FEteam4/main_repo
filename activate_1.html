@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css" />
+    <style>
+      /* 페이지 규격 , 폰트 */
+      .page {
+        position: relative;
+        height: 100vh;
+        background-repeat: no-repeat;
+        background-image: url("/main_repo/image/background/활동_동아리화면.png");
+        background-size: auto 100%;
+        background-position: center;
+        overflow: hidden;
+        text-align: left;
+        color: rgba(0, 0, 0, 0);
+        font-family: "Gmarket Sans TTF";
+      }
+
+      /* 대기 화면 */
+      .background_wait {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 2560px;
+        height: 1440px;
+        object-fit: cover;
+      }
+      .text-container {
+        display: inline-block;
+        white-space: nowrap;
+        border-right: 2px solid violet; /* 타이핑 효과 */
+        padding-right: 5px;
+      }
+      .character {
+        position: absolute;
+        left: -600px; /* 화면 밖 왼쪽에서 시작 */
+        top: 50%;
+        transform: translateY(-50%);
+        transition: all 0.8s ease;
+      }
+      .character.active {
+        left: 450px; /* 화면 안으로 이동 */
+      }
+
+      .character img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="page container">
+      <div class="small_chat_window"></div>
+      <div class="character" id="character">
+        <img src="./image/another/동아리_사람.png" alt="" />
+      </div>
+      <div class="text_container">
+        <div class="chat_window"></div>
+        <div class="text_context" id="text"></div>
+      </div>
+    </div>
+
+    <script>
+      // 이미지 요소
+      document.addEventListener("click", () => {
+        window.location.href = "./activate_2.html";
+      });
+
+      const character = document.getElementById("character");
+      let isActive = false;
+
+      // 페이지 로드 시 자동으로 슬라이드 인 실행
+      window.addEventListener("load", () => {
+        setTimeout(() => {
+          character.classList.add("active");
+          isActive = true;
+        }, 500);
+      });
+
+      const text = "안녕하세요! 시뮬레이션 게임에 오신걸 환영합니다.";
+      let index = 0;
+      const speed = 150; // 글자 나오는 속도 (ms)
+
+      function showText() {
+        if (index < text.length) {
+          document.getElementById("text").innerHTML += text[index];
+          index++;
+          setTimeout(showText, speed);
+        }
+      }
+      document.addEventListener("DOMContentLoaded", () => {
+        setTimeout(showText, 2000);
+      });
+    </script>
+  </body>
+</html>
