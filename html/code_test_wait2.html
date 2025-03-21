@@ -49,8 +49,8 @@
           opacity: 0;
         }
       }
-      .next_button {
-        display: none;
+      .next_button,
+      .email_button {
         position: absolute;
         right: 20px;
         bottom: 80px;
@@ -60,14 +60,32 @@
         cursor: pointer;
         animation: blink-effect 1s step-end infinite;
       }
+      .next_button {
+        display: block;
+      }
+      .email_button {
+        display: none;
+      }
       .next_button:hover {
         animation: none;
       }
+      .email_modal {
+        display: none;
+        position: absolute;
+        width: 800px;
+        height: 500px;
+        top: 20px;
+        left: 400px;
+        background-color: white;
+        border-radius: 20px;
+        z-index: 200;
+      }
     </style>
   </head>
-  <body>
+  <body class="page">
     <div class="container">
-      <img src="../image/background/채용전형_서류화면.png" class="page" />
+      <img src="../image/background/채용전형_코테화면.png" class="page" />
+      <div class="email_modal"></div>
       <div class="character_container">
         <img src="../image/man/남자_서류_평소표정.png" class="character" />
       </div>
@@ -75,11 +93,17 @@
         <div class="chat_window"></div>
         <div class="text_context"></div>
         <div class="next_button"></div>
+        <div class="email_button"></div>
       </div>
     </div>
     <script>
       let index = 0;
       const speed = 100;
+      let currentIndex = 0;
+
+      const messages = [
+        "필기 전형 결과가 도착했습니다. 메일을 확인해보시겠습니까?",
+      ];
 
       const show = async (text) => {
         const context = document.querySelector(".text_context");
@@ -93,29 +117,37 @@
       };
 
       const next_button = document.querySelector(".next_button");
+      const email_button = document.querySelector(".email_button");
+      const character_container = document.querySelector(
+        ".character_container"
+      );
+      const text_container = document.querySelector(".text_container");
+      const email_modal = document.querySelector(".email_modal");
 
-      const messages = [
-        "서류 검토를 마쳤습니다. 지금 바로 서류를 제출하시겠습니까?",
-        "서류 전형 결과가 도착했습니다. 메일을 확인해 보시겠습니까?",
-        "다음 전형까지 2주 밖에 남지 않았습니다. 코테를 준비할 마지막 기회입니다.",
-      ];
-      let currentIndex = 0;
+      const openModal = () => {
+        character_container.style.display = "none";
+        text_container.style.display = "none";
+        document.querySelector(".email_modal").style.display = "block";
+      };
 
       const controlButton = async () => {
         if (currentIndex >= messages.length) return;
 
-        next_button.style.display = "none";
         await show(messages[currentIndex]);
         currentIndex++;
-
-        next_button.style.display = "block";
         if (currentIndex == messages.length) {
-          next_button.removeEventListener("mousedown", controlButton);
-          console.log('대기화면으로 이동'); // todo : 대기화면으로 이동
+          next_button.style.display = "none";
+          email_button.style.display = "block";
+          return;
         }
       };
 
-      next_button.addEventListener("mousedown", controlButton);
+      email_modal.addEventListener("mousedown", () => {
+        //통과하면
+        location.href =
+          "http://127.0.0.1:5500/main_repo/html/code_test_wait2_after_pass.html";
+      });
+      email_button.addEventListener("mousedown", openModal);
       document.addEventListener("DOMContentLoaded", controlButton);
     </script>
   </body>

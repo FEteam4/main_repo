@@ -49,8 +49,7 @@
           opacity: 0;
         }
       }
-      .next_button {
-        display: none;
+      .next_button, .next_page_button {
         position: absolute;
         right: 20px;
         bottom: 80px;
@@ -60,14 +59,32 @@
         cursor: pointer;
         animation: blink-effect 1s step-end infinite;
       }
-      .next_button:hover {
+      .next_button:hover, .next_page_button:hover {
         animation: none;
+      }
+      .next_button {
+        display: block;
+      }
+      .next_page_button {
+        display: none;
+      }
+      .email_modal {
+        display: none;
+        position: absolute;
+        width: 800px;
+        height: 500px;
+        top: 20px;
+        left: 400px;
+        background-color: white;
+        border-radius: 20px;
+        z-index: 200;
       }
     </style>
   </head>
   <body class="page">
     <div class="container">
-      <img src="../image/background/대기화면.png" class="page" />
+      <img src="../image/background/채용전형_코테화면.png" class="page" />
+      <div class="email_modal"></div>
       <div class="character_container">
         <img src="../image/man/남자_서류_평소표정.png" class="character" />
       </div>
@@ -75,17 +92,22 @@
         <div class="chat_window"></div>
         <div class="text_context"></div>
         <div class="next_button"></div>
+        <div class="next_page_button"></div>
       </div>
     </div>
     <script>
       let index = 0;
       const speed = 100;
-      const next_button = document.querySelector(".next_button");
+      let currentIndex = 0;
+
+      const messages = [
+        "마지막 관문만 남았습니다. 임원 면접 전형으로 이동합니다.",
+      ];
 
       const show = async (text) => {
         const context = document.querySelector(".text_context");
         let index = 0;
-        context.innerHTML += "<br/>";
+        context.innerHTML = "";
 
         for (const char of text) {
           context.innerHTML += char;
@@ -93,30 +115,39 @@
         }
       };
 
-      const messages = [
-        "포트폴리오를 마지막으로 점검하고, 내 코드의 모든 라인을 설명할 수 있게 되었습니다.",
-        "청심환을 먹고 만반의 준비를 마쳤으니 이제 시작해 볼까요?",
-      ];
-      let currentIndex = 0;
+      const next_button = document.querySelector(".next_button");
+      const next_page_button = document.querySelector(".next_page_button");
+      const character_container = document.querySelector(
+        ".character_container"
+      );
+      const text_container = document.querySelector(".text_container");
 
-      const controlButton = async () => {
-        next_button.style.display = "none";
-        await show(messages[0]);
-        currentIndex++;
-        await show(messages[1]);
-        return;
+      const openModal = () => {
+        character_container.style.display = "none";
+        text_container.style.display = "none";
+        document.querySelector(".email_modal").style.display = "block";
       };
 
-      next_button.addEventListener(
+      const controlButton = async () => {
+        if (currentIndex >= messages.length) return;
+
+        await show(messages[currentIndex]);
+        currentIndex++;
+        if (currentIndex == messages.length) {
+            next_button.style.display = "none";
+            next_page_button.style.display = "block";
+          return;
+        }
+      };
+
+      next_page_button.addEventListener(
         "mousedown",
         () =>
           (location.href =
-            "http://127.0.0.1:5500/main_repo/html/interview1.html")
+            "http://127.0.0.1:5500/main_repo/html/interview2.html")
       );
-      document.addEventListener("DOMContentLoaded", () => {
-        controlButton();
-        next_button.style.display = "block";
-      });
+      next_button.addEventListener("mousedown", openModal);
+      document.addEventListener("DOMContentLoaded", controlButton);
     </script>
   </body>
 </html>
