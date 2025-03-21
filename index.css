@@ -37,9 +37,9 @@ img.page {
   position: absolute;
   font-size: 2.5rem;
   z-index: 100;
-  color: white; 
-  top: 50px; 
-  left: 50px; 
+  color: white;
+  top: 50px;
+  left: 50px;
 }
 /* 큰 대화창 */
 .chat_window {
@@ -53,9 +53,10 @@ img.page {
   height: 500px;
   background: rgba(0, 0, 0, 0.79);
   box-shadow: 58px 58px 58px;
-  border-radius: 40px; 
+  border-radius: 40px;
   filter: blur(29.35px);
 }
+
 /* 큰 대화창 위에 상호작용 키 배경 */
 .button_container{
   position: absolute;
