@@ -6,6 +6,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="index.css" />
     <script src="textTyper.js"></script>
+     <script src="probability.js"></script>
     <style>
       /* 페이지 규격 , 폰트 */
       .page {
@@ -38,13 +39,10 @@
       }
       .character {
         position: absolute;
-        left: -600px; /* 화면 밖 왼쪽에서 시작 */
+        left: 450px; /* 화면 밖 왼쪽에서 시작 */
         top: 70%;
         transform: translateY(-50%);
         transition: all 0.8s ease;
-      }
-      .character.active {
-        left: 450px; /* 화면 안으로 이동 */
       }
 
       .character img {
@@ -52,6 +50,7 @@
         height: 100%;
         object-fit: contain;
       }
+
       .showAllText{
         position: absolute;
         width: 50%;
@@ -65,42 +64,44 @@
         position: absolute;
 bottom: 10px;
       }
+      #resultContainer {
+        position: absolute;
+        top: 50px;
+        left: 50px;
+        z-index: 200;
+        color: white; 
+      }
+      p {
+        font-size: 1.5rem;
+      }
     </style>
   </head>
 
   <body>
     <div class="page container">
-      <div class="button_container">
-      <div class="small_chat_window"></div>
-      <div class="button_window">
-        <button id="showAllText">모두 표시</button>
-        <button id="nextText">다음 글자</button>
+        <div class="button_container">
+        <div class="small_chat_window"></div>
+        <div class="button_window">
+          <button id="showAllText">모두 표시</button>
+          <button id="nextText">다음 글자</button>
+        </div>
+        </div>
+        <div class="character" id="character">
+          <img src="./image/another/동아리_사람.png"/>
+        </div>
+        <div class="text_container">
+          <div class="chat_window"></div>
+          <div class="text_context" id="text"></div>
+          <div id="resultContainer"></div>
+
+        </div>
       </div>
-      </div>
-      <div class="character" id="character">
-        <img src="./image/another/동아리_사람.png"/>
-      </div>
-      <div class="text_container">
-        <div class="chat_window"></div>
-        <div class="text_context" id="text"></div>
-      </div>
-    </div>
+  
 
     <script>
-      const character = document.getElementById("character");
-      let isActive = false;
 
-      // 페이지 로드 시 자동으로 슬라이드 인 실행
-      window.addEventListener("load", () => {
-        setTimeout(() => {
-          character.classList.add("active");
-          isActive = true;
-        }, 500);
-      });
-      const texts = [
-            "전공 동아리? 개발 스터디? ‘그냥 가볍게’ 시작했는데 주말이 사라졌습니다.",
-            "협업, 리딩, 발표, 개발.. 남는 건 실력일까요, 피로일까요?",
-            "아무튼 이거.. 생각보다 빡셉니다. (진짜로.) 그래도 해야지 어떡해."
+const texts = [
+            ". . ."
         ];
         const nextPage = "./activate_2.html";
 
@@ -109,7 +110,7 @@ bottom: 10px;
 
         // 페이지 로드 후 텍스트 애니메이션 시작
         document.addEventListener("DOMContentLoaded", () => {
-          setTimeout(() => textTyper.showText(), 1000);
+            textTyper.showText();
         });
         // 버튼 클릭 시 다음 텍스트 출력
         document.getElementById("showAllText").addEventListener("click", () => {
@@ -119,7 +120,10 @@ bottom: 10px;
         document.getElementById("nextText").addEventListener("click", () => {
             textTyper.showNextChar();
         });
-
+        const hidden_text = document.getElementById("text");
+        setTimeout(() => {
+        hidden_text.style.visibility = "hidden"; // 텍스트 다시 보이기
+      }, 2000);
     </script>
   </body>
 </html>
