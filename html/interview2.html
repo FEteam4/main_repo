@@ -86,7 +86,7 @@
   </head>
   <body>
     <div class="container">
-      <img src="../image/background/채용전형_1차면접.png" class="page" />
+      <img src="../image/background/채용전형_2차면접.png" class="page" />
       <div class="interview_modal"></div>
       <div class="character_container">
         <img src="../image/man/정장남자_대화1.png" class="character" />
@@ -117,11 +117,10 @@
         ".character_container"
       );
       const text_container = document.querySelector(".text_container");
-      const interview_modal = 
-        document.querySelector(".interview_modal");
+      const interview_modal = document.querySelector(".interview_modal");
 
       document.addEventListener("DOMContentLoaded", () => {
-        show("1차 면접을 시작합니다.").then(() => {
+        show("2차 면접을 시작합니다.").then(() => {
           next_button.style.display = "block";
         });
       });
@@ -143,7 +142,7 @@
       // 지금은 모달 창 누르면 게임 끝이라 가정.
       interview_modal.addEventListener("mousedown", () => {
         closeModal();
-        show("수고하셨습니다.").then(() => {
+        show("수고하셨습니다. 모든 전형이 완료되었습니다.").then(() => {
           next_button.style.display = "block";
           next_button.removeEventListener("mousedown", openModal);
           next_button.addEventListener("mousedown", () => {

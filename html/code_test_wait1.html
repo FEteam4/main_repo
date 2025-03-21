@@ -63,33 +63,13 @@
       .next_button:hover {
         animation: none;
       }
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
-        }
-      }
-      .interview_modal {
-        display: none;
-        position: absolute;
-        width: 800px;
-        height: 500px;
-        top: 20px;
-        left: 400px;
-        background-color: white;
-        border-radius: 20px;
-        z-index: 200;
-      }
     </style>
   </head>
-  <body>
+  <body class="page">
     <div class="container">
-      <img src="../image/background/채용전형_1차면접.png" class="page" />
-      <div class="interview_modal"></div>
+      <img src="../image/background/채용전형_코테화면.png" class="page" />
       <div class="character_container">
-        <img src="../image/man/정장남자_대화1.png" class="character" />
+        <img src="../image/man/남자_서류_평소표정.png" class="character" />
       </div>
       <div class="text_container">
         <div class="chat_window"></div>
@@ -113,44 +93,32 @@
       };
 
       const next_button = document.querySelector(".next_button");
-      const character_container = document.querySelector(
-        ".character_container"
+
+      const messages = [
+        "필기 시험을 응시할 준비가 되셨나요? 코딩테스트를 시작합니다.",
+      ];
+      let currentIndex = 0;
+
+      const controlButton = async () => {
+        if (currentIndex >= messages.length) return;
+
+        next_button.style.display = "none";
+        await show(messages[currentIndex]);
+        currentIndex++;
+
+        next_button.style.display = "block";
+        if (currentIndex == messages.length) {
+          reuturn;
+        }
+      };
+
+      next_button.addEventListener(
+        "mousedown",
+        () =>
+          (location.href =
+            "http://127.0.0.1:5500/main_repo/html/code_test_monitor.html")
       );
-      const text_container = document.querySelector(".text_container");
-      const interview_modal = 
-        document.querySelector(".interview_modal");
-
-      document.addEventListener("DOMContentLoaded", () => {
-        show("1차 면접을 시작합니다.").then(() => {
-          next_button.style.display = "block";
-        });
-      });
-
-      const openModal = () => {
-        character_container.style.display = "none";
-        text_container.style.display = "none";
-        document.querySelector(".interview_modal").style.display = "block";
-      };
-
-      const closeModal = () => {
-        character_container.style.display = "block";
-        text_container.style.display = "block";
-        document.querySelector(".interview_modal").style.display = "none";
-      };
-
-      next_button.addEventListener("mousedown", openModal);
-
-      // 지금은 모달 창 누르면 게임 끝이라 가정.
-      interview_modal.addEventListener("mousedown", () => {
-        closeModal();
-        show("수고하셨습니다.").then(() => {
-          next_button.style.display = "block";
-          next_button.removeEventListener("mousedown", openModal);
-          next_button.addEventListener("mousedown", () => {
-            console.log("다음 화면 이동"); // todo: 대기 화면으로 이동
-          });
-        });
-      });
+      document.addEventListener("DOMContentLoaded", controlButton);
     </script>
   </body>
 </html>
