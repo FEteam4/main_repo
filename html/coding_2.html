@@ -4,14 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="../index.css" />
     <style>
       /* 페이지 규격 , 폰트 */
       .page {
         position: relative;
         height: 100vh;
         background-repeat: no-repeat;
-        background-image: url("./image/background/활동_동아리화면.png");
+        background-image: url("../image/background/활동_코테화면.png");
         background-size: auto 100%;
         background-position: center;
         overflow: hidden;
@@ -37,15 +37,15 @@
       }
       .character {
         position: absolute;
-        left: 450px; /* 화면 밖 왼쪽에서 시작 */
+        left: 250px; /* 화면 밖 왼쪽에서 시작 */
         top: 70%;
-        transform: translateY(-50%);
+        transform: translateY(-100%);
         transition: all 0.8s ease;
       }
 
       .character img {
-        width: 100%;
-        height: 100%;
+        width: 80%;
+        height: 80%;
         object-fit: contain;
       }
       .left_c {
@@ -81,19 +81,19 @@
         left: 30px;
       }
       .option-container {
-  border: 2px solid transparent; /* 기본 테두리 없음 */
-  padding: 10px;
-  cursor: pointer;
-  transition: border 0.3s ease-in-out;
-}
+        border: 2px solid transparent; /* 기본 테두리 없음 */
+        padding: 10px;
+        cursor: pointer;
+        transition: border 0.3s ease-in-out;
+      }
 
-.option-container:hover {
-  border: 2px solid #007bff; /* 마우스를 올리면 파란색 테두리 */
-}
+      .option-container:hover {
+        border: 2px solid #007bff; /* 마우스를 올리면 파란색 테두리 */
+      }
 
-.option-container.selected {
-  border: 2px solid #28a745; /* 클릭하면 초록색 테두리 */
-}
+      .option-container.selected {
+        border: 2px solid #28a745; /* 클릭하면 초록색 테두리 */
+      }
     </style>
   </head>
 
@@ -101,7 +101,7 @@
     <div class="page container">
       <div class="small_chat_window"></div>
       <div class="character" id="character">
-        <img src="./image/another/동아리_사람.png"/>
+        <img src="../image/another/코테_사람.png" />
       </div>
       <div class="left_c option-container">
         <div class="aside_window"></div>
@@ -112,6 +112,6 @@
         <div id="option2" class="option-container"></div>
       </div>
     </div>
-    <script src="./activate.js"></script>
+    <script src="../coding.js"></script>
   </body>
 </html>

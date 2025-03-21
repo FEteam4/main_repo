@@ -1,4 +1,4 @@
-fetch("./activate.json")
+fetch("../json/certification.json")
   .then((response) => response.json())
   .then((data) => {
     const selectedData = getSelectedData(data);
@@ -71,14 +71,18 @@ function saveToLocalStorage(selectedData) {
   }
 }
 // 다음 페이지로 이동
-document.querySelector(".left_c").addEventListener("click", () => goToNextPage_l());
-document.querySelector(".right_c").addEventListener("click", () => goToNextPage_r());
+document
+  .querySelector(".left_c")
+  .addEventListener("click", () => goToNextPage_l());
+document
+  .querySelector(".right_c")
+  .addEventListener("click", () => goToNextPage_r());
 
 function goToNextPage_l() {
-  localStorage.removeItem('option2');
-  window.location.href = "./activate_3.html"; // 다음 페이지로 이동
+  localStorage.removeItem("option2");
+  window.location.href = "./certification_3.html"; // 다음 페이지로 이동
 }
 function goToNextPage_r() {
-  localStorage.removeItem('option1');
-  window.location.href = "./activate_3.html"; // 다음 페이지로 이동
+  localStorage.removeItem("option1");
+  window.location.href = "./certification_3.html"; // 다음 페이지로 이동
 }

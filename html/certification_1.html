@@ -4,15 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="index.css" />
-    <script src="textTyper.js"></script>
+    <link rel="stylesheet" href="../index.css" />
+    <script src="../textTyper.js"></script>
     <style>
       /* 페이지 규격 , 폰트 */
       .page {
         position: relative;
         height: 100vh;
         background-repeat: no-repeat;
-        background-image: url("./image/background/활동_동아리화면.png");
+        background-image: url("../image/background/활동_자격증.png");
         background-size: auto 100%;
         background-position: center;
         overflow: hidden;
@@ -40,30 +40,30 @@
         position: absolute;
         left: -600px; /* 화면 밖 왼쪽에서 시작 */
         top: 70%;
-        transform: translateY(-50%);
+        transform: translateY(-60%);
         transition: all 0.8s ease;
       }
       .character.active {
-        left: 450px; /* 화면 안으로 이동 */
+        left: 400px; /* 화면 안으로 이동 */
       }
 
       .character img {
-        width: 100%;
-        height: 100%;
+        width: 130%;
+        height: 130%;
         object-fit: contain;
       }
-      .showAllText{
+      .showAllText {
         position: absolute;
         width: 50%;
         height: 100%;
         z-index: 100;
       }
-      .button_window{
+      .button_window {
         width: 100%;
         display: flex;
         justify-content: space-evenly;
         position: absolute;
-bottom: 10px;
+        bottom: 10px;
       }
     </style>
   </head>
@@ -71,14 +71,13 @@ bottom: 10px;
   <body>
     <div class="page container">
       <div class="button_container">
-      <div class="small_chat_window"></div>
-      <div class="button_window">
-        <button id="showAllText">모두 표시</button>
-        <button id="nextText">다음 글자</button>
-      </div>
+        <div class="button_window">
+          <button id="showAllText">모두 표시</button>
+          <button id="nextText">다음 글자</button>
+        </div>
       </div>
       <div class="character" id="character">
-        <img src="./image/another/동아리_사람.png"/>
+        <img src="../image/another/자격증_사람.png" />
       </div>
       <div class="text_container">
         <div class="chat_window"></div>
@@ -98,28 +97,32 @@ bottom: 10px;
         }, 500);
       });
       const texts = [
-            "전공 동아리? 개발 스터디? ‘그냥 가볍게’ 시작했는데 주말이 사라졌습니다.",
-            "협업, 리딩, 발표, 개발.. 남는 건 실력일까요, 피로일까요?",
-            "아무튼 이거.. 생각보다 빡셉니다. (진짜로.) 그래도 해야지 어떡해."
-        ];
-        const nextPage = "./activate_2.html";
+        "독학이든, 스터디든, 벼락치기든 방법은 많습니다.",
+        " 하지만 하나는 확실합니다. 시험 날짜는 당신을 기다려주지 않습니다.",
+        " 그리고 응시료.. 떨어지면 그냥 N만원 태운 겁니다.",
+        " 치킨으로 따지면 몇 마리냐고요? 생각하지 마세요, 마음만 아픕니다. ",
+        "자, 이제 선택할 시간입니다. ",
+      ];
+      const nextPage = "./certification_2.html";
 
-        // TextTyper 인스턴스 생성
-        const textTyper = new TextTyper(texts, nextPage);
+      // TextTyper 인스턴스 생성
+      const textTyper = new TextTyper(texts, nextPage);
 
-        // 페이지 로드 후 텍스트 애니메이션 시작
-        document.addEventListener("DOMContentLoaded", () => {
-          setTimeout(() => textTyper.showText(), 1000);
-        });
-        // 버튼 클릭 시 다음 텍스트 출력
-        document.getElementById("showAllText").addEventListener("click", () => {
-            textTyper.showAllText();
-        });
-        // 버튼 클릭 시 다음 텍스트 출력
-        document.getElementById("nextText").addEventListener("click", () => {
-            textTyper.showNextChar();
-        });
-
+      // 페이지 로드 후 텍스트 애니메이션 시작
+      document.addEventListener("DOMContentLoaded", () => {
+        console.log("실행1");
+        setTimeout(() => textTyper.showText(), 1000);
+      });
+      // 버튼 클릭 시 다음 텍스트 출력
+      document.getElementById("showAllText").addEventListener("click", () => {
+        console.log("실행2");
+        textTyper.showAllText();
+      });
+      // 버튼 클릭 시 다음 텍스트 출력
+      document.getElementById("nextText").addEventListener("click", () => {
+        console.log("실행3");
+        textTyper.showNextChar();
+      });
     </script>
   </body>
 </html>
