@@ -125,25 +125,32 @@
           next_button.style.display = "block";
         });
       });
-      
-      next_button.addEventListener("mousedown", () => {
+
+      const openModal = () => {
         character_container.style.display = "none";
         text_container.style.display = "none";
         document.querySelector(".interview_modal").style.display = "block";
-      });
+      };
+
+      const closeModal = () => {
+        character_container.style.display = "block";
+        text_container.style.display = "block";
+        document.querySelector(".interview_modal").style.display = "none";
+      };
+
+      next_button.addEventListener("mousedown", openModal);
 
       // 지금은 모달 창 누르면 게임 끝이라 가정.
-      interview_modal
-        .addEventListener("mousedown", () => {
-          character_container.style.display = "block";
-          text_container.style.display = "block";
-          interview_modal.style.display = "none";
-          
-          show("수고하셨습니다.").then(() => {
-            next_button.style.display = "block";
+      interview_modal.addEventListener("mousedown", () => {
+        closeModal();
+        show("수고하셨습니다.").then(() => {
+          next_button.style.display = "block";
+          next_button.removeEventListener("mousedown", openModal);
+          next_button.addEventListener("mousedown", () => {
             console.log("다음 화면 이동"); // todo: 대기 화면으로 이동
           });
         });
+      });
     </script>
   </body>
 </html>
